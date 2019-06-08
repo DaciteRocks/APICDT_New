@@ -1,9 +1,0 @@
-{
-  "vzAny": {
-    "attributes": {
-      "dn": "uni/tn-{{tn_name}}/ctx-{{name}}/any",
-      "matchT": "AtleastOne",
-      "prefGrMemb": "{{prefgrp}}"
-    }
-  }
-}

@@ -1,9 +1,0 @@
-{
-    "infraAccPortP": {
-        "attributes": {
-            "dn": "uni/infra/accportprof-{{name}}",
-            "name": "{{name}}",
-            "status": "{{status}}"
-        }
-    }
-}
