@@ -969,7 +969,7 @@ class FabAccPol(object):
                          'mod_end': '1',
                          'port_start': '',
                          'port_end': '',}
-        optional_args = {'descr': ''}
+        optional_args = {'Interface_Descr': '', 'Child_Descr': ''}
 
         templateVars = process_kwargs(required_args, optional_args, **kwargs)
 

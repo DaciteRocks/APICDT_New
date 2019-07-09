@@ -2,7 +2,7 @@
     "infraHPortS": {
         "attributes": {
             "name": "{{port_name}}",
-            "descr": "{{descr}}",
+            "descr": "{{Interface_Descr}}",
             "rn": "hports-{{port_name}}-typ-range",
             "status": "{{status}}",
             "type": "range"
@@ -21,6 +21,7 @@
             {
                 "infraPortBlk": {
                     "attributes": {
+                    	"descr": "{{Child_Descr}}",
                         "fromCard": "{{mod_start}}",
                         "toCard": "{{mod_end}}",
                         "fromPort": "{{port_start}}",
