@@ -958,7 +958,8 @@ class FabAccPol(object):
     # port_start: Starting port as an integer
     # port_end: Ending port as an integer
     # optional: kwarg:
-    # Description: Anything 
+    # Interface_Descr: outer level description
+    # Child_Descr: inner level description
     def int_selector(self, **kwargs):
         required_args = {'name': '',
                          'status': '',
@@ -1129,11 +1130,13 @@ class FabAccPol(object):
     # name: Name of the Interface Selector
     # fex_pol_grp: Name of the FEX Policy Group
     # status: created | created,modified | deleted
+    # descr: description
+    
     def fex_profile(self, **kwargs):
         required_args = {'name': '',
                          'fex_pol_grp': '',
                          'status': ''}
-        optional_args = {}
+        optional_args = {'descr': ''}
 
         templateVars = process_kwargs(required_args, optional_args, **kwargs)
 
@@ -1161,6 +1164,8 @@ class FabAccPol(object):
     # mod_end: Ending mod as an integer (almost always 1)
     # port_start: Starting port as an integer
     # port_end: Ending port as an integer
+    # Interface_Descr: outer level description
+    # Child_Descr: Inner level description
     def fex_int_profile(self, **kwargs):
         required_args = {'name': '',
                          'status': '',
@@ -1171,7 +1176,7 @@ class FabAccPol(object):
                          'port_end': '',
                          'fex_id': ''}
         optional_args = {'mod_start': '1',
-                         'mod_end': '1'}
+                         'mod_end': '1','Interface_Descr': '', 'Child_Descr': ''}
 
         templateVars = process_kwargs(required_args, optional_args, **kwargs)
 

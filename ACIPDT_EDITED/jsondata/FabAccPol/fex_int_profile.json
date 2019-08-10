@@ -3,7 +3,8 @@
     "attributes": {
       "dn": "uni/infra/fexprof-{{name}}/hports-{{port_name}}-typ-range",
       "name": "{{port_name}}",
-      "type": "range"
+      "type": "range",
+      "descr": "{{Interface_Descr}}"
     },
     "children": [
       {
@@ -17,6 +18,7 @@
       {
         "infraPortBlk": {
           "attributes": {
+          "descr": "{{Child_Descr}}",
             "fromCard": "{{mod_start}}",
             "fromPort": "{{port_start}}",
             "name": "block2",

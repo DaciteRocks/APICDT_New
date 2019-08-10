@@ -1,7 +1,7 @@
 {
   "infraFexP": {
     "attributes": {
-      "descr": "",
+      "descr": "{{descr}}",
       "dn": "uni/infra/fexprof-{{name}}",
       "name": "{{name}}",
       "status": "{{status}}"
