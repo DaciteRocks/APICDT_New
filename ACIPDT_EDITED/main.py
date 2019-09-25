@@ -75,7 +75,7 @@ def findVars(ws, rows, func, count):
     for i in range(2, rows):
         if (ws.cell(i, 0)).value == func:
             try:
-                for x in range(4, 17):
+                for x in range(4, 18):
                     if (ws.cell(i - 1, x)).value:
                         var_list.append((ws.cell(i - 1, x)).value)
                     else:
@@ -161,6 +161,7 @@ def pod_policies(apic, cookies, wb, wr_wb):
             status = eval("podpol.%s(**var_dict[pos])" % func)
             wb_update(wr_ws, status, row_num)
             time.sleep(.025)
+
 
 
 def access_policies(apic, cookies, wb, wr_wb):

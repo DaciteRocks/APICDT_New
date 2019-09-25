@@ -733,7 +733,7 @@ class FabAccPol(object):
                          'status': '',
                          'sw1': '',
                          'sw2': ''}
-        optional_args = {}
+        optional_args = {} 
 
         templateVars = process_kwargs(required_args, optional_args, **kwargs)
 
@@ -970,7 +970,7 @@ class FabAccPol(object):
                          'mod_end': '1',
                          'port_start': '',
                          'port_end': '',}
-        optional_args = {'Interface_Descr': '', 'Child_Descr': ''}
+        optional_args = {'port_descr': '', 'int_descr': ''}
 
         templateVars = process_kwargs(required_args, optional_args, **kwargs)
 
@@ -1176,7 +1176,7 @@ class FabAccPol(object):
                          'port_end': '',
                          'fex_id': ''}
         optional_args = {'mod_start': '1',
-                         'mod_end': '1','Interface_Descr': '', 'Child_Descr': ''}
+                         'mod_end': '1','port_descr': '', 'int_descr': ''}
 
         templateVars = process_kwargs(required_args, optional_args, **kwargs)
 
@@ -1451,17 +1451,17 @@ class FabTnPol(object):
     # name: Name of the BD
     # vrf: Name of associated VRF
     # status: created | created,modified | deleted
+    # status is alwasys created,modified so can be deleted.
     def bd_vrf(self, **kwargs):
         required_args = {'tn_name': '',
                          'name': '',
-                         'vrf': '',
-                         'status': ''}
-        optional_args = {}
+                         'vrf': ''}
+        optional_args = {'status': ''}
 
         templateVars = process_kwargs(required_args, optional_args, **kwargs)
 
-        if templateVars['status'] not in valid_status:
-            raise InvalidArg('Status invalid')
+        #if templateVars['status'] not in valid_status:
+        #    raise InvalidArg('Status invalid')
 
         template_file = "bd_vrf.json"
 
@@ -1836,6 +1836,82 @@ class FabTnPol(object):
                        templateVars['epg_name'], templateVars['contract']))
         status = post(self.apic, payload, self.cookies, uri, template_file)
         return status
+    
+    # Method must be called with the following kwargs.
+    # tn_name: The name of the Tenant
+    # ap_name: Name of parent Application Profile
+    # epg_name: Name of the EPG
+    # pod (optional): Integer ID of the pod
+    # sw1: Switch 1 of the vPC (node ID) as an integer
+    # sw2: Switch 2 of the vPC (node ID) as an integer
+    # sw3: integer
+    # sw4: integer
+    # vpc: Name of the vPC
+    # encap: Encapsulation VLAN ID as an integer
+    # deploy: lazy | immediate
+    # mode; (optional): regular (trunk) | native (dot1p)
+    # status: created | created,modified | deleted
+    def fex_static_path_vpc(self, **kwargs):
+        required_args = {'tn_name': '',
+                         'ap_name': '',
+                         'epg_name': '',
+                         'sw1': '',
+                         'sw2': '',
+                         'fex1': '',
+                         'fex2': '',
+                         'vpc': '',
+                         'encap': '',
+                         'deploy': '',
+                         'status': ''}
+        optional_args = {'pod': '1',
+                         'mode': 'regular'}
+
+        templateVars = process_kwargs(required_args, optional_args, **kwargs)
+
+        if not int(templateVars['sw1']):
+            raise InvalidArg('ID must be an integer')
+        else:
+            templateVars['sw1'] = int(templateVars['sw1'])
+        if not int(templateVars['sw2']):
+            raise InvalidArg('ID must be an integer')
+        else:
+            templateVars['sw2'] = int(templateVars['sw2'])
+        if not int(templateVars['fex1']):
+            raise InvalidArg('ID must be an integer')
+        else:
+            templateVars['fex1'] = int(templateVars['fex1'])
+        if not int(templateVars['fex2']):
+            raise InvalidArg('ID must be an integer')
+        else:
+            templateVars['fex2'] = int(templateVars['fex2'])
+        if not int(templateVars['encap']):
+            raise InvalidArg('ID must be an integer')
+        else:
+            templateVars['encap'] = int(templateVars['encap'])
+        if not int(templateVars['pod']):
+            raise InvalidArg('Pod ID must be an integer')
+        else:
+            templateVars['pod'] = int(templateVars['pod'])
+        if templateVars['status'] not in valid_status:
+            raise InvalidArg('Status invalid')
+
+        template_file = "fex_static_path_vpc.json"
+        template = self.templateEnv.get_template(template_file)
+
+        payload = template.render(templateVars)
+
+        uri = ('mo/uni/tn-{}/ap-{}/epg-{}'
+               .format(templateVars['tn_name'], templateVars['ap_name'],
+                       templateVars['epg_name']))
+        status = post(self.apic, payload, self.cookies, uri, template_file)
+        return status
+    
+    
+    
+    
+    
+    
+    
 
     # Method must be called with the following kwargs.
     # tn_name: The name of the Tenant
