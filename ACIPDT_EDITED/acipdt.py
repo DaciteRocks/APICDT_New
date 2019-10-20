@@ -194,7 +194,8 @@ class FabPodPol(object):
     # status: created | created,modified | deleted
     def ntp(self, **kwargs):
         required_args = {'address': '',
-                         'status': ''}
+                         'status': '',
+                         'pref': ''}
         optional_args = {}
 
         templateVars = process_kwargs(required_args, optional_args, **kwargs)
@@ -210,6 +211,23 @@ class FabPodPol(object):
         payload = template.render(templateVars)
 
         uri = 'mo/uni'
+        status = post(self.apic, payload, self.cookies, uri, template_file)
+        return status
+
+
+    def ntp_tz(self, **kwargs):
+        required_args = {'tz': ''}
+
+        optional_args = {}
+
+        templateVars = process_kwargs(required_args, optional_args, **kwargs)
+
+        template_file = "ntp_tz.json"
+        template = self.templateEnv.get_template(template_file)
+
+        payload = template.render(templateVars)
+
+        uri = 'mo/uni/fabric/format-default'
         status = post(self.apic, payload, self.cookies, uri, template_file)
         return status
 
@@ -336,6 +354,37 @@ class FabPodPol(object):
         status = post(self.apic, payload, self.cookies, uri, template_file)
         return status
 
+
+
+
+
+    def isis_metric(self, **kwargs):
+         required_args = {'metric': '', 'mtu': ''}
+ 
+         optional_args = {}
+
+         templateVars = process_kwargs(required_args, optional_args, **kwargs)
+
+         
+         if not int(templateVars['mtu']):
+            raise InvalidArg('mtu must be an integer')
+         else:
+            templateVars['mtu'] = int(templateVars['mtu'])
+         
+         if not int(templateVars['metric']):
+            raise InvalidArg('metric must be an integer')
+         else:
+            templateVars['metric'] = int(templateVars['metric'])
+         
+         
+         template_file = "isis_metric.json"
+         template = self.templateEnv.get_template(template_file)
+
+         payload = template.render(templateVars)
+
+         uri = 'mo/uni'
+         status = post(self.apic, payload, self.cookies, uri, template_file)
+         return status
 
 # Class must be instantiated with APIC IP address and cookies
 class FabAccPol(object):
@@ -958,8 +1007,8 @@ class FabAccPol(object):
     # port_start: Starting port as an integer
     # port_end: Ending port as an integer
     # optional: kwarg:
-    # port_descr: outer level description for port
-    # int_descr: inner level description for int
+    # Interface_Descr: outer level description
+    # Child_Descr: inner level description
     def int_selector(self, **kwargs):
         required_args = {'name': '',
                          'status': '',
@@ -1164,8 +1213,8 @@ class FabAccPol(object):
     # mod_end: Ending mod as an integer (almost always 1)
     # port_start: Starting port as an integer
     # port_end: Ending port as an integer
-    # port_descr: outer level description for port
-    # int_descr: Inner level description for int
+    # Interface_Descr: outer level description
+    # Child_Descr: Inner level description
     def fex_int_profile(self, **kwargs):
         required_args = {'name': '',
                          'status': '',
