@@ -958,8 +958,8 @@ class FabAccPol(object):
     # port_start: Starting port as an integer
     # port_end: Ending port as an integer
     # optional: kwarg:
-    # Interface_Descr: outer level description
-    # Child_Descr: inner level description
+    # port_descr: outer level description for port
+    # int_descr: inner level description for int
     def int_selector(self, **kwargs):
         required_args = {'name': '',
                          'status': '',
@@ -1164,8 +1164,8 @@ class FabAccPol(object):
     # mod_end: Ending mod as an integer (almost always 1)
     # port_start: Starting port as an integer
     # port_end: Ending port as an integer
-    # Interface_Descr: outer level description
-    # Child_Descr: Inner level description
+    # port_descr: outer level description for port
+    # int_descr: Inner level description for int
     def fex_int_profile(self, **kwargs):
         required_args = {'name': '',
                          'status': '',
